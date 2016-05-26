@@ -1,0 +1,87 @@
+
+1. $ git --version
+2. $ git config --global user.name "ChongGit"          //设置用户名 
+3. $ git config --global user.email "865193852@qq.com" //设置用户邮箱
+
+//创建版本库
+4. mkdir learngit   // 创建一个空目录
+5. cd learngit      //到创建的目录下
+
+//通过git init命令把这个目录变成Git可以管理的仓库
+6. $ git init
+
+7. $ git config --global push.default simple               # 要是你非要用低版本的Git（比如1.7.x），好吧，那就不设simple设current，否则你的Git不支持  
+8. $ git config --global core.autocrlf false               # 让Git不要管Windows/Unix换行符转换的事  
+9. $ git config --global gui.encoding utf-8                # 避免git gui中的中文乱码  
+10. $ git config --global core.quotepath off               # 避免git status显示的中文文件名乱码  
+其中最后两个配置是关于中文乱码的，基本够用了。
+
+Windows上还需要配置：
+git config --global core.ignorecase false  
+
+$ git config --list        #查看git的配置
+----------------------------------------------------------
+参考：
+1）创建新的git仓库
+$ mkdir git_repo  
+$ cd git_repo  
+$ git init  
+$ echo "test" > README.mkd  
+$ git add README.mkd  
+$ git commit -m "add README.mkd file"  
+$ git remote add origin git@github.com:username/test.git  
+$ git push -u origin master  
+------------------------------------------------------------
+echo test > /opt/dev/test.txt
+1、如果/opt/dev/test.txt不存在，会创建test.txt，添加内容test
+2、如果/opt/dev/test.txt已存在，会清空test.txt，添加内容test
+3、echo test是个命令
+4、> file.txt 可以清空或创建一个文件
+5、echo aaa >> file.txt会保留原来的内容并添加
+------------------------------------------------------------
+$ cat readme.txt              //查看当前版本的内容
+$ git reset --hard HEAD^      //回退到上一个版本
+$ git reset --hard commit_id  //回退到指定的版本
+
+$ git reflog                  //记录你的每一次命令
+$ git diff                    //工作区的文件和仓缓存中的文件比较 （缓存：add 了 但是没有 commit）
+$ git diff HEAD -- readme.txt //工作区的文件和仓库中的比较
+
+$ git checkout -- file          //命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令，我们在后面的分支管理中会再次遇到git checkout命令
+$ git checkout -- readme.txt  //撤销修改 让这个工作区的文件回到最近一次git commit或git add时的状态 
+
+$ git reset HEAD readme.txt   //用命令git reset HEAD file可以把暂存区的修改撤销掉（unstage），重新放回工作区
+$ git reset                   //git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。
+
+$ git rm test.txt             //删除文件
+$ git commit -m "remove test.txt"
+
+另一种情况是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：
+$ git checkout -- test.txt
+git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+
+
+注册GitHub账户
+首先，登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库：
+在Repository name填入learngit，其他保持默认设置，点击“Create repository”按钮，就成功地创建了一个新的Git仓库：
+我们根据GitHub的提示，在本地的learngit仓库下运行命令：
+$ git remote add origin git@github.com:Dachon/learnGit.git
+
+$ git push -u origin master   //把本地库的所有内容推送到远程库上：
+
+从现在起，只要本地作了提交，就可以通过命令：
+$ git push origin master
+
+要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
+
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+
+分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是有没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！
+--------------------
+从远程库克隆
+首先，登陆GitHub，创建一个新的仓库，名字叫gitSkills：
+$ git clone git@github.com:Dachon/gitSkills.git
+
+
